@@ -4,6 +4,14 @@
  */
 package frm;
 
+import dominio.Usuario;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  *
  * @author eduar
@@ -30,9 +38,10 @@ public class InicioSesion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
-        txtContraseña = new javax.swing.JTextField();
         botonRegistrar = new javax.swing.JButton();
         botonIniciar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        campoContraseña = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,6 +66,8 @@ public class InicioSesion extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("¿No tienes una cuenta?");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,11 +88,15 @@ public class InicioSesion extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtTelefono)
-                                    .addComponent(txtContraseña)))
+                                    .addComponent(campoContraseña)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(botonRegistrar)
-                                .addGap(150, 150, 150)
-                                .addComponent(botonIniciar)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(botonRegistrar)
+                                        .addGap(132, 132, 132)
+                                        .addComponent(botonIniciar))
+                                    .addComponent(jLabel4))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(31, 31, 31))
         );
@@ -97,8 +112,10 @@ public class InicioSesion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                    .addComponent(campoContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonRegistrar)
                     .addComponent(botonIniciar))
@@ -114,8 +131,38 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistrarActionPerformed
 
     private void botonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIniciarActionPerformed
-        PantallaPrincipal pp = new PantallaPrincipal();
-        pp.setVisible(true);
+        EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("com.mycompany_juatsapp_jar_1.0-SNAPSHOTPU");
+        EntityManager entityManager = managerFactory.createEntityManager();
+
+        try {
+            String numeroTelefono = txtTelefono.getText();
+            String contraseñaIngresada = new String(campoContraseña.getPassword());
+
+            if (numeroTelefono.isEmpty() || contraseñaIngresada.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Usuario usuario = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.telefono = :telefono", Usuario.class)
+                    .setParameter("telefono", Long.parseLong(numeroTelefono))
+                    .getSingleResult();
+
+            if (usuario != null && verificarContraseña(contraseñaIngresada, usuario.getContraseña())) {
+                // Cerrar la ventana de inicio de sesión actual
+                this.dispose();
+                // Abrir la pantalla principal
+                PantallaPrincipal pantallaPrincipal = new PantallaPrincipal(usuario);
+                pantallaPrincipal.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Número de teléfono o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, introduzca un número de teléfono válido.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+        } catch (NoResultException e) {
+            JOptionPane.showMessageDialog(this, "Número de teléfono no registrado.", "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            entityManager.close();
+        }
     }//GEN-LAST:event_botonIniciarActionPerformed
 
     /**
@@ -156,10 +203,20 @@ public class InicioSesion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonIniciar;
     private javax.swing.JButton botonRegistrar;
+    private javax.swing.JPasswordField campoContraseña;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField txtContraseña;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+
+    public static String hashPassword(String plainTextPassword) {
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+    }
+
+    public static boolean verificarContraseña(String plainTextPassword, String hashedPassword) {
+        return BCrypt.checkpw(plainTextPassword, hashedPassword);
+    }
+
 }
