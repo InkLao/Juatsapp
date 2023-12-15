@@ -20,6 +20,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public PantallaPrincipal(Usuario usuario) {
         this.usuarioLogueado=usuario;
         initComponents();
+        
+        botonModificar.addActionListener(e -> modificarPerfil());
+        botonCrear.addActionListener(e -> crearChat());
+        botonCerrar.addActionListener(e -> cerrarSesion());
     }
 
     /**
@@ -108,12 +112,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
-        PantallaPerfil pp = new PantallaPerfil();
+        PantallaPerfil pp = new PantallaPerfil(usuarioLogueado);
         pp.setVisible(true);
     }//GEN-LAST:event_botonModificarActionPerformed
 
     private void botonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCrearActionPerformed
-        PantallaCrearChat cc = new PantallaCrearChat();
+        PantallaCrearChat cc = new PantallaCrearChat(usuarioLogueado);
         cc.setVisible(true);
     }//GEN-LAST:event_botonCrearActionPerformed
 
@@ -130,4 +134,25 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    private void modificarPerfil() {
+        // Aquí abres la ventana o diálogo para modificar el perfil
+        // Ejemplo:
+        PantallaPerfil pantallaModificar = new PantallaPerfil(usuarioLogueado);
+        pantallaModificar.setVisible(true);
+    }
+
+    private void crearChat() {
+        // Aquí abres la ventana o diálogo para crear un nuevo chat
+        // Ejemplo:
+        PantallaCrearChat pantallaCrearChat = new PantallaCrearChat(usuarioLogueado);
+        pantallaCrearChat.setVisible(true);
+    }
+
+    private void cerrarSesion() {
+        // Cierras esta ventana y abres la de inicio de sesión
+        this.dispose(); // Cerrar la ventana actual
+        InicioSesion pantallaInicio = new InicioSesion();
+        pantallaInicio.setVisible(true);
+    }
 }
