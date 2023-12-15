@@ -39,12 +39,12 @@
                           <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtTelefono" min="-2" pref="194" max="-2" attributes="0"/>
-                          <Component id="txtContr" min="-2" pref="194" max="-2" attributes="0"/>
-                          <Component id="txtCumple" min="-2" pref="194" max="-2" attributes="0"/>
-                          <Component id="txtDireccion" min="-2" pref="194" max="-2" attributes="0"/>
-                          <Component id="txtSexo" min="-2" pref="194" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txtTelefono" max="32767" attributes="0"/>
+                          <Component id="txtCumple" pref="194" max="32767" attributes="0"/>
+                          <Component id="txtDireccion" pref="194" max="32767" attributes="0"/>
+                          <Component id="txtSexo" pref="194" max="32767" attributes="0"/>
+                          <Component id="campoContraseña" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -52,9 +52,9 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+              <Component id="botonInicio" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="botonRegistrar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -72,7 +72,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtContr" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="campoContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -91,8 +91,8 @@
               </Group>
               <EmptySpace pref="27" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonRegistrar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonInicio" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
           </Group>
@@ -135,23 +135,29 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtTelefono">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtContr">
-    </Component>
     <Component class="javax.swing.JTextField" name="txtCumple">
     </Component>
     <Component class="javax.swing.JTextField" name="txtDireccion">
     </Component>
     <Component class="javax.swing.JTextField" name="txtSexo">
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="botonRegistrar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonRegistrarActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="botonInicio">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Menu Inicial"/>
+        <Property name="text" type="java.lang.String" value="Iniciar Sesion"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonInicioActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="campoContrase&#xf1;a">
     </Component>
   </SubComponents>
 </Form>

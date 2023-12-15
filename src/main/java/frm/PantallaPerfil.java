@@ -37,8 +37,8 @@ public class PantallaPerfil extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         txtContr = new javax.swing.JTextField();
         txtCumple = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botonModificar = new javax.swing.JButton();
+        botonRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,9 +55,9 @@ public class PantallaPerfil extends javax.swing.JFrame {
 
         jLabel6.setText("Sexo");
 
-        jButton1.setText("Modificar");
+        botonModificar.setText("Modificar");
 
-        jButton2.setText("Regresar");
+        botonRegresar.setText("Regresar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,7 +76,7 @@ public class PantallaPerfil extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
-                            .addComponent(jButton2))
+                            .addComponent(botonRegresar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -87,7 +87,7 @@ public class PantallaPerfil extends javax.swing.JFrame {
                 .addContainerGap(67, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(botonModificar)
                 .addGap(47, 47, 47))
         );
         layout.setVerticalGroup(
@@ -117,8 +117,8 @@ public class PantallaPerfil extends javax.swing.JFrame {
                     .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(botonModificar)
+                    .addComponent(botonRegresar))
                 .addGap(27, 27, 27))
         );
 
@@ -161,8 +161,8 @@ public class PantallaPerfil extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton botonModificar;
+    private javax.swing.JButton botonRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

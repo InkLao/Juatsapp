@@ -27,5 +27,6 @@ public class Juatsapp {
         usuario.setTelefono((long) 1671072782);
         entityManager.persist(usuario);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }
