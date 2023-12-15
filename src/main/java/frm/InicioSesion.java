@@ -147,7 +147,7 @@ public class InicioSesion extends javax.swing.JFrame {
                     .setParameter("telefono", Long.parseLong(numeroTelefono))
                     .getSingleResult();
 
-            if (usuario != null && verificarContraseña(contraseñaIngresada, usuario.getContraseña())) {
+            if (usuario != null && verificarContraseña(contraseñaIngresada, usuario.getContraseñaHash())) {
                 // Cerrar la ventana de inicio de sesión actual
                 this.dispose();
                 // Abrir la pantalla principal

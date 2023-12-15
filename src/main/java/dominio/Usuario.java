@@ -11,28 +11,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
  * @author eduar
  */
 @Entity
-@Table(name="usuarios")
+@Table(name = "usuarios")
 public class Usuario implements Serializable {
 
     //private static final long serialVersionUID = 1L;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
     private Long telefono;
-    private String contraseña;
     private String direccion;
     private String fechaNacimiento;
-    private String imagenPerfil; 
-    private String sexo; 
+    private String imagenPerfil;
+    private String sexo;
+    private String contraseñaHash;
 
     // Getter y Setter para teléfono
     public Long getTelefono() {
@@ -43,13 +43,12 @@ public class Usuario implements Serializable {
         this.telefono = telefono;
     }
 
-    // Getter y Setter para contraseña
-    public String getContraseña() {
-        return contraseña;
+    public void setContraseña(String contraseñaPlana) {
+        this.contraseñaHash = BCrypt.hashpw(contraseñaPlana, BCrypt.gensalt());
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public String getContraseñaHash() {
+        return this.contraseñaHash;
     }
 
     // Getter y Setter para dirección
@@ -87,6 +86,10 @@ public class Usuario implements Serializable {
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
+    
+    public boolean verificarContraseña(String contraseñaPlana) {
+        return BCrypt.checkpw(contraseñaPlana, this.contraseñaHash);
+    }
 
     @Override
     public int hashCode() {
@@ -112,5 +115,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "dominio.Usuario[ id=" + id + " ]";
     }
-    
+
 }
