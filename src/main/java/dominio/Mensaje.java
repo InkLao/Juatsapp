@@ -31,6 +31,10 @@ public class Mensaje implements Serializable {
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario; 
+    
+    @ManyToOne
+    @JoinColumn(name = "chart_id")
+    private Chat chat; 
 
     @Column
     private String texto;
@@ -46,6 +50,14 @@ public class Mensaje implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 
     public Usuario getUsuario() {
